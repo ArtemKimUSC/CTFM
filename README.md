@@ -53,7 +53,7 @@ The script will download all necessary files and put them in the `CTFM/data/` fo
 The following workflow uses the CT-FM pipeline with 927 cCRE annotations of diverse human cell types, as it was performed in the CT-FM paper : **arxiv link**
 
 ## 1. Process GWAS summary statistics
-The goal here is to take your GWAS sumstats and convert it to a hg19 S-LDSC friendly format using the script 1_create_sumstats.pl
+The goal here is to take your GWAS sumstats and convert it to a hg19 S-LDSC friendly format using the script `1_create_sumstats.pl`
 The code below assumes that it is launched from the root directory and that the unprocessed GWAS sumstats is gzipped and already located in the sumstats_in/ folder.
 
 `conda activate ldsc` <br />
