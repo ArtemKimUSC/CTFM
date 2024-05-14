@@ -1,4 +1,4 @@
-name: ldsc_git
+name: ldsc
 channels:
 - conda-forge
 - bioconda

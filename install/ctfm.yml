@@ -1,4 +1,4 @@
-name: ctfm_git
+name: ctfm
 channels:
   - conda-forge
   - nodefaults
