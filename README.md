@@ -7,18 +7,20 @@ Steven Gazal gazal@usc.edu<br />
 
 # Installation
 
-## Pre-requisites
+## Pre-requisites <br />
 
 Make sure to have anaconda/conda and mamba installed in your environment <br />
 https://www.anaconda.com/download <br />
 https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html
 
-## 1. Clone the repository
+## 1. Clone the repository <br />
+
 `git clone https://github.com/ArtemKimUSC/CTFM/`
 
 
 ## 2. Install conda environments
 CT-FM uses two independent conda environments. <br /> The first one - `ldsc` - is used for pre-processing of GWAS summary statistic files and for running Stratified LD score regression (S-LDSC) method. The second one - `ctfm` - is used to run SuSiE fine-mapping on S-LDSC results.<br />
+
 `cd CTFM`<br />
 `mamba env create -f install/ctfm.yml`<br />
 `mamba env create -f install/ldsc.yml` <br />
@@ -27,13 +29,11 @@ CT-FM uses two independent conda environments. <br /> The first one - `ldsc` - i
 Once created, try to activate the two conda environments and load the susieR library and make sure there are no errors.
 
 -Testing ldsc <br />
-
 `conda activate ldsc` <br />
 `python ~/bin/ldsc/ldsc.py -h` <br />
 `conda deactivate` <br />
 
 -Testing ctfm <br />
-
 `conda activate ctfm`<br />
 `R`<br />
 `library(susieR)`<br />
