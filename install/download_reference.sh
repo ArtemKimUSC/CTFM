@@ -19,8 +19,8 @@ echo "Done"
 
 echo "Downloading S-LDSC reference annotations for CT-FM"
 
-wget  -o .zip
-gunzip .zip
+wget https://zenodo.org/records/11194201/files/SLDSC_default.zip?download=1  -O SLDSC_default.zip
+unzip SLDSC_default.zip
 
 
 echo "Done"
