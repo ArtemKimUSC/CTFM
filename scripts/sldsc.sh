@@ -25,7 +25,10 @@ OUTDIR="out/SLDSC/$TRAIT/"
 OUTFILE="$OUTDIR/$TRAIT.$OUT_NUM"
 mkdir -p $OUTDIR
 
-sed "s@data@${DATA_PATH}@g" $SCRIPT_PATH/../$LDCTS > $OUTFILE.cts
+#sed "s@data@${DATA_PATH}@g" $SCRIPT_PATH/../$LDCTS > $OUTFILE.cts
+
+sed "s@data@${DATA_PATH}@g" $LDCTS > $OUTFILE.cts
+
 
 python ~/bin/ldsc/ldsc.py \
   --h2-cts $SUMSTAT \

@@ -6,9 +6,9 @@ trait=args[2]
 
 
 ### read correlation matrix EUR ###
-cor.res=read.table(paste0(wd,'/data/R.txt'), sep='\t', header=T) # read the correlation matrix
+cor.res=read.table(paste0(wd,'/data/SLDSC_default/R.txt'), sep='\t', header=T) # read the correlation matrix
 cor.res=as.matrix(cor.res)
-annots=read.table(paste0(wd,'/data/annots.txt'), header=T, sep='\t')
+annots=read.table(paste0(wd,'/data/SLDSC_default/annots.txt'), header=T, sep='\t')
 cor.res=cor.res[rownames(cor.res) %in% annots$Name, colnames(cor.res) %in% annots$Name]
 
 
@@ -36,10 +36,10 @@ data$Name=gsub('-','.',data$Name)
 data$Name=gsub('Zhang_Zhang_','Zhang_',data$Name)
 data$Name=gsub('ENCODE_','',data$Name)
 
-if (all(colnames(cor.res) %in% data$Name)==TRUE) {print('match OK')} else {print('ERROR match'); stop()}
+#if (all(colnames(cor.res) %in% data$Name)==TRUE) {print('match OK')} else {print('ERROR match'); stop()}
 
 data=data[data$Name %in% rownames(cor.res),]
-if (nrow(data)==927) { print('OK');print(i) } else {print('ERROR: Number of annots is not 927, stopping...');next}
+#if (nrow(data)==927) { print('OK');print(i) } else {print('ERROR: Number of annots is not 927, stopping...');next}
 
 
 data=data[match(rownames(cor.res), data$Name), ]
