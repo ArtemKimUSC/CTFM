@@ -36,10 +36,10 @@ data$Name=gsub('-','.',data$Name)
 data$Name=gsub('Zhang_Zhang_','Zhang_',data$Name)
 data$Name=gsub('ENCODE_','',data$Name)
 
-#if (all(colnames(cor.res) %in% data$Name)==TRUE) {print('match OK')} else {print('ERROR match'); stop()}
+if (all(colnames(cor.res) %in% data$Name)==TRUE) {print('match OK')} else {print('ERROR match'); stop()}
 
 data=data[data$Name %in% rownames(cor.res),]
-#if (nrow(data)==927) { print('OK');print(i) } else {print('ERROR: Number of annots is not 927, stopping...');next}
+if (nrow(data)==927) { print('OK');print(i) } else {print('ERROR: Number of annots is not 927, stopping...');next}
 
 
 data=data[match(rownames(cor.res), data$Name), ]
@@ -144,8 +144,6 @@ for (i in 1:nrow(L)) {if (!(L$L[i] %in% names(a$cs))) {
     } else { print(paste(L$L[i],' already in Susie CS')) }  }
     } else {  
         print('no alpha CS')
-        #write.table(all_pips, file=paste0(wd,'/out/susie/',trait,'_CTFM_pips.txt'),sep='\t', quote=F,row.names=F)
-        #write.table(all_sldsc, file=paste0(wd,'/out/susie/',trait,'_CTFM_sldsc.txt'),sep='\t', quote=F,row.names=F)
 }
 
 print(paste0('Number of alpha CS: ', nrow(table(cs_alpha$CS_Num))))

@@ -1,7 +1,3 @@
-#load environment / modules
-# eval "$(conda shell.bash hook)"
-# module purge
-# conda activate ldsc
 
 TRAIT=$1
 LDCTS=$2
