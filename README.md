@@ -40,7 +40,7 @@ Once created, try to activate the two conda environments and load the susieR lib
 `q()`<br />
 
 ## 4. Download reference files
-To run CT-FM, you need to download the 1000 Genomes reference files and default S-LDSC annotations. 
+To run CT-FM, you need to download the 1000 Genomes reference files and default S-LDSC annotations.<br />
 **Warning : the download size is big (~20 GB)**
 
 `bash install/download_reference.sh`
