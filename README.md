@@ -15,36 +15,46 @@ https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html
 
 ## 1. Clone the repository <br />
 
-##
-<tab><tab>`git clone https://github.com/ArtemKimUSC/CTFM/`
+
+```bash
+git clone https://github.com/ArtemKimUSC/CTFM/
+```
 
 
 ## 2. Install conda environments
 CT-FM uses two independent conda environments. <br /> The first one - `ldsc` - is used for pre-processing of GWAS summary statistic files and for running Stratified LD score regression (S-LDSC) method. The second one - `ctfm` - is used to run SuSiE fine-mapping on S-LDSC results.<br />
 
-`cd CTFM`<br />
-`mamba env create -f install/ctfm.yml`<br />
-`mamba env create -f install/ldsc.yml` <br />
+```bash
+cd CTFM
+mamba env create -f install/ctfm.yml
+mamba env create -f install/ldsc.yml
+```
 
 ## 3. Test conda environments 
 Once created, try to activate the two conda environments and load the susieR library and make sure there are no errors.
 
 -Testing ldsc <br />
-`conda activate ldsc` <br />
-`python ~/bin/ldsc/ldsc.py -h` <br />
-`conda deactivate` <br />
+```bash
+conda activate ldsc
+python ~/bin/ldsc/ldsc.py -h
+conda deactivate
+```
 
 -Testing ctfm <br />
-`conda activate ctfm`<br />
-`R`<br />
-`library(susieR)`<br />
-`q()`<br />
+```R
+conda activate ctfm
+R
+library(susieR)
+q()
+```
 
 ## 4. Download reference files
 To run CT-FM, you need to download the 1000 Genomes reference files and default S-LDSC annotations.<br />
 **Warning : the download size is big (~20 GB)**
 
-`bash install/download_reference.sh`
+```bash
+bash install/download_reference.sh
+```
 
 The script will download all necessary files and put them in the `CTFM/data/` folder
 
@@ -56,20 +66,22 @@ The following workflow uses the CT-FM pipeline with 927 cCRE annotations of dive
 ## 1. Process GWAS summary statistics
 The goal here is to take your GWAS sumstats and convert it to a hg19 S-LDSC friendly format using the script `1_create_sumstats.pl`
 The code below assumes that it is launched from the root directory and that the unprocessed GWAS sumstats is gzipped and already located in the sumstats_in/ folder.
+```bash
+conda activate ldsc
 
-`conda activate ldsc` <br />
+perl scripts/1_create_sumstats.pl --filein sumstats_in/YOUR_SUMSTATS \   # precise the name of your GWAS sumstats omitting the .gz extension
+ --fileout sumstats_ready/YOUR_NEW_SUMSTATS \ # output sumstats, put it in the sumstats_ready/ directory for downstream analyses
+ --chr  \
+ --pos  \
+ --beta  \
+ --se  \
+ --A1  \
+ --A2  \
+ --hg  \
+  --N
 
-`perl scripts/1_create_sumstats.pl --filein sumstats_in/YOUR_SUMSTATS \   # precise the name of your GWAS sumstats omitting the .gz extension` <br />
- `--fileout sumstats_ready/YOUR_NEW_SUMSTATS \ # output sumstats, put it in the sumstats_ready/ directory for downstream analyses`<br />
- `--chr  \`<br />
- `--pos  \`<br />
- `--beta  \`<br />
- `--se  \`<br />
- `--A1  \`<br />
- `--A2  \`<br />
- `--hg  \`<br />
- ` --N`<br />
-`conda deactivate`
+conda deactivate
+```
 
 For this script, we need to precise:<br />
 -the input GWAS summary statistics file (the one you put in the sumstats_in folder): `--filein` argument <br />
@@ -94,10 +106,12 @@ We will use the `2_launch_SLDSC_default.sh` script which will launch 5 analyses 
 The main code for S-LDSC analysis is stored in `scripts/sldsc.sh`<br />
 The script to launch is `scripts/2_launch_SLDSC.sh` => If you work on a cluster with SLURM-like job submissions, I recommend you modify this script to launch 5 analyses as 5 separate jobs.<br />
 
+```bash
+conda activate ldsc
+bash scripts/2_launch_SLDSC.sh $YOUR_NEW_SUMSTATS_NAME  # precise the name of your sumstats file omitting the "sumstats.gz" part
+conda deactivate
+```
 
-`conda activate ldsc`<br />
-`bash scripts/2_launch_SLDSC.sh $YOUR_NEW_SUMSTATS_NAME  # precise the name of your sumstats file omitting the "sumstats.gz" part`<br />
-`conda deactivate`<br />
 
 The output will be stored in `CTFM/out/SLDSC/YOUR_NEW_SUMSTATS/`<br />
 
@@ -105,11 +119,11 @@ The output will be stored in `CTFM/out/SLDSC/YOUR_NEW_SUMSTATS/`<br />
 ## 3. Launch fine-mapping for your S-LDSC results 
 We will use the R script `3_launch_susie.R` to perform SuSiE fine-mapping for the analyzed GWAS (`$YOUR_NEW_SUMSTATS` argument) and 927 S-LDSC annotations.<br />
 
-
-`conda activate ctfm`<br />
-`Rscript scripts/3_launch_susie.R $directory $YOUR_NEW_SUMSTATS #precise the work directory in which CT-FM was downloaded and the name of your sumstats file`<br />
-`conda deactivate`<br />
-
+```bash
+conda activate ctfm
+Rscript scripts/3_launch_susie.R $directory $YOUR_NEW_SUMSTATS #precise the work directory in which CT-FM was downloaded and the name of your sumstats file
+conda deactivate
+```
 
 => The results are composed of 3 files containing the initial S-LDSC results (`_CTFM_sldsc.txt`), CT-FM PIP values (`_CTFM_pips.txt`) and Credible sets (`_CTFM_CS.txt`) -> stored in `out/susie/`
 
