@@ -102,7 +102,7 @@ total sample size of cases and controls: add `--N1` (number of cases) and `--N2`
 
 ## 2. Run S-LDSC with 927 cCRE annotations
 
-We will use the `2_launch_SLDSC_default.sh` script which will launch 5 analyses (running time ~10-15 hours for each) to run S-LDSC on your GWAS sumstats and on 927 different cCRE annotations. <br />
+We will use the `2_launch_SLDSC_default.sh` script which will launch 5 analyses (running time ~10-15 hours for each) to run S-LDSC on your GWAS sumstats with 927 different cCRE annotations. <br />
 The main code for S-LDSC analysis is stored in `scripts/sldsc.sh`<br />
 The script to launch is `scripts/2_launch_SLDSC.sh`<br /> => **If you work on a cluster with SLURM-like job submissions, I recommend you modify this script to launch 5 analyses as 5 separate jobs.** <br />
 
