@@ -28,7 +28,7 @@ cd CTFM
 mamba env create -f install/ctfm.yml
 ```
 
-## 3. Test conda environments 
+## 3. Test conda environment
 Once created, try to activate the conda environment, test LDSC build and the susieR library to make sure there are no errors.
 
 ```bash
