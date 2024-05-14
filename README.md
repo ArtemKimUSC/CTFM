@@ -15,7 +15,8 @@ https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html
 
 ## 1. Clone the repository <br />
 
-`git clone https://github.com/ArtemKimUSC/CTFM/`
+##
+<tab><tab>`git clone https://github.com/ArtemKimUSC/CTFM/`
 
 
 ## 2. Install conda environments
