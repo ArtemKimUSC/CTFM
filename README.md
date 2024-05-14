@@ -127,7 +127,9 @@ conda deactivate
 
 => The results are composed of 3 files containing the initial S-LDSC results (`_CTFM_sldsc.txt`), CT-FM PIP values (`_CTFM_pips.txt`) and Credible sets (`_CTFM_CS.txt`) -> stored in `out/susie/`
 
+# Running CT-FM with custom annotations
 
+In development.
 
 
 
