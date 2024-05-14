@@ -1,4 +1,4 @@
-name: test_ctfm
+name: ctfm
 channels:
 - conda-forge
 - bioconda
