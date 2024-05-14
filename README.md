@@ -21,31 +21,23 @@ git clone https://github.com/ArtemKimUSC/CTFM/
 ```
 
 
-## 2. Install conda environments
-CT-FM uses two independent conda environments. <br /> The first one - `ldsc` - is used for pre-processing of GWAS summary statistic files and for running Stratified LD score regression (S-LDSC) method. The second one - `ctfm` - is used to run SuSiE fine-mapping on S-LDSC results.<br />
+## 2. Install conda environment
 
 ```bash
 cd CTFM
 mamba env create -f install/ctfm.yml
-mamba env create -f install/ldsc.yml
 ```
 
 ## 3. Test conda environments 
-Once created, try to activate the two conda environments and load the susieR library and make sure there are no errors.
+Once created, try to activate the conda environment and load the susieR library and make sure there are no errors.
 
--Testing ldsc <br />
 ```bash
-conda activate ldsc
-python ~/bin/ldsc/ldsc.py -h
-conda deactivate
-```
-
--Testing ctfm <br />
-```R
 conda activate ctfm
+python ~/bin/ldsc/ldsc.py -h
 R
 library(susieR)
 q()
+conda deactivate
 ```
 
 ## 4. Download reference files
@@ -67,7 +59,7 @@ The following workflow uses the CT-FM pipeline with 927 cCRE annotations of dive
 The goal here is to take your GWAS sumstats and convert it to a hg19 S-LDSC friendly format using the script `1_create_sumstats.pl`
 The code below assumes that it is launched from the root directory and that the unprocessed GWAS sumstats is gzipped and already located in the sumstats_in/ folder.
 ```bash
-conda activate ldsc
+conda activate ctfm
 
 perl scripts/1_create_sumstats.pl --filein sumstats_in/YOUR_SUMSTATS \   # precise the name of your GWAS sumstats omitting the .gz extension
  --fileout sumstats_ready/YOUR_NEW_SUMSTATS \ # output sumstats, put it in the sumstats_ready/ directory for downstream analyses
@@ -107,7 +99,7 @@ The main code for S-LDSC analysis is stored in `scripts/sldsc.sh`<br />
 The script to launch is `scripts/2_launch_SLDSC.sh`<br /> => **If you work on a cluster with SLURM-like job submissions, I recommend you modify this script to launch 5 analyses as 5 separate jobs.** <br />
 
 ```bash
-conda activate ldsc
+conda activate ctfm
 bash scripts/2_launch_SLDSC.sh $YOUR_NEW_SUMSTATS_NAME  # precise the name of your sumstats file omitting the "sumstats.gz" part
 conda deactivate
 ```
