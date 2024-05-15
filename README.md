@@ -139,6 +139,7 @@ Make sure you have downloaded the necessary bed files (step 5 of **Installation*
 ## 1. Get overlapping annotations 
 
 We will use the script `4_CTFMSNP_default_annots.sh` to retreive, for each SNP, the overlapping annotations. The script takes as input a list of SNPs to analyze in hg19 bed format, as shown in the example below:<br />
+
 `chr1	100818727	100818728	rs17420882`
 
 Importantly, the 4th column needs to correspond to the name of the SNP (will be used for output). You also need to precise the output directory:
