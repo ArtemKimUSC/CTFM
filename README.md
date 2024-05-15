@@ -161,7 +161,7 @@ Rscript scripts/5_CTFMSNP_default_susie.R $WORKING_DIRECTORY $TRAIT $SNP.out
 conda deactivate
 ```
 
-The script requires 3 arguments:
+The script requires 3 arguments: <br />
 `$WORKING_DIRECTORY` - the directory CT-FM was downloaded into <br />
 `$TRAIT` - the trait of interest, must have the same name as the directory with S-LDSC results in `out/SLDSC/` <br />
 `$SNP.out` - the SNP to analyze, genereated in step 1. precise the full path to the file <br />
