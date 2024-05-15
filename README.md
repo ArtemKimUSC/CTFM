@@ -169,7 +169,7 @@ The script requires 3 arguments: <br />
 
 The results will be stored in `out/ctfmsnp/$TRAIT/$SNP_pips.txt` and `out/ctfmsnp/$TRAIT/$SNP_CS.txt` - PIP values for each overlapping annotation and the inferred credible sets.
 
-# Running CT-FM with custom annotations
+# Running CT-FM and CT-FM-SNP with custom annotations
 
 In development.
 
