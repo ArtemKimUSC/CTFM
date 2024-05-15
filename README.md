@@ -153,7 +153,7 @@ The script will generate, for each SNP, a file `$SNP.out` containing overlapping
 
 
 ## 2. Run CT-FM-SNP on S-LDSC results 
-For each SNP, the script `5_CTFMSNP_default_susie.R` runs fine-mapping using S-LDSC results for the trait of interest.
+For each SNP, the script `5_CTFMSNP_default_susie.R` runs fine-mapping using S-LDSC results of overlapping annotations for the trait of interest.
 
 ```bash
 conda activate ctfm
