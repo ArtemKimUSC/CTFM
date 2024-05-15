@@ -3,6 +3,7 @@ channels:
 - conda-forge
 - bioconda
 dependencies:
+- bedtools
 - perl-math-cdf
 - python=2.7
 - bitarray=0.8
