@@ -55,7 +55,7 @@ The script will download all necessary files and put them in the `CTFM/data/` fo
 You will need the bed files of the initial annotations to run CT-FM-SNP
 
 ```bash
-download_ctfmsnp_reference.sh
+bash install/download_ctfmsnp_reference.sh
 ```
 **Warning : the download size is big (~850 Mb archive, ~17 GB uncompressed)**
 
