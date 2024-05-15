@@ -1,5 +1,5 @@
 # CT-FM and CT-FM-SNP - Cell Type Fine-Mapping
-**CT-FM** and **CT-FM-SNP** are a statistical genetics methods to identify causal cell types underlying diseases/complex traits and particular candidate SNPs, respectively. We leverage cell type specific candidate cis-regulatory elements (cCREs) together with GWAS summary statistics while accounting for co-regulation of cis-regulatory effects across diverse cell types.
+**CT-FM** and **CT-FM-SNP** are statistical genetics methods to identify causal cell types underlying diseases/complex traits and particular candidate SNPs, respectively. We leverage cell type specific candidate cis-regulatory elements (cCREs) together with GWAS summary statistics while accounting for co-regulation of cis-regulatory effects across diverse cell types.
 
 Contacts:<br /> 
 Artem Kim artemkim@usc.edu<br />
