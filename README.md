@@ -40,7 +40,7 @@ q()
 conda deactivate
 ```
 
-## 4. Download reference files
+## 4. Download reference files for CT-FM
 To run CT-FM, you need to download the 1000 Genomes reference files and default S-LDSC annotations.<br />
 **Warning : the download size is big (~20 GB)**
 
@@ -49,6 +49,16 @@ bash install/download_reference.sh
 ```
 
 The script will download all necessary files and put them in the `CTFM/data/` folder
+
+## 5. (optional) Download reference files for CT-FM-SNP
+
+You will need the bed files of the initial annotations to run CT-FM-SNP
+
+```bash
+download_ctfmsnp_reference.sh
+```
+**Warning : the download size is big (~850 Mb archive, ~17 GB uncompressed)**
+
 
 
 # Running the default CT-FM pipeline
@@ -118,6 +128,26 @@ conda deactivate
 ```
 
 => The results are composed of 3 files containing the initial S-LDSC results (`_CTFM_sldsc.txt`), CT-FM PIP values (`_CTFM_pips.txt`) and Credible sets (`_CTFM_CS.txt`) -> stored in `out/susie/`
+
+# Running the default CT-FM-SNP pipeline
+
+The following workflow uses the CT-FM-SNP pipeline with 927 cCRE annotations of diverse human cell types, as it was performed in our paper : **arxiv link** <br />
+
+Make sure you have downloaded the necessary bed files (step 5 of **Installation**)
+
+
+## 1. Get overlapping annotations 
+
+We will use the script `4_CTFMSNP_default_annots.sh` to retreive, for each SNP, the overlapping annotations. The script takes as input a list of SNPs to analyze in hg19 bed format, as shown in the example below:
+
+
+```bash
+conda activate ctfm
+bash scripts/4_CTFMSNP_default_annots.sh ../test.bed ../test/
+conda deactivate
+```
+
+## 2. Run CT-FM-SNP on S-LDSC results 
 
 # Running CT-FM with custom annotations
 
