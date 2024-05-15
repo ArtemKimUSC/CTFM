@@ -96,11 +96,11 @@ For this script, we need to precise:<br />
 
 The script was also designed to take as input other GWAS sumstats information, for example: <br /> 
 
-Z-scores: add `--Z` argument (column number) and remove `--beta` and `--se` arguments <br />
-OR values: add `--OR` argument (column number) and remove `--beta` and `--se` arguments <br />
-p-values: add `--pval` argument (column number) and remove `--beta` and `--se` arguments. Note: this option will convert P values into unsigned Z scores, which allows heritability partitioning analyses but not genetic correlation analyses. If OR is available, you can precise both `--p-val` and `--OR` arguments to estimate signed effects. <br />
-total sample size of GWAS: add `--myN` argument (total samplesize number) and remove `--N` argument <br />
-total sample size of cases and controls: add `--N1` (number of cases) and `--N2` (number of controls) and remove `--N` / `--myN` arguments <br />
+**Z-scores**: add `--Z` argument (column number) and remove `--beta` and `--se` arguments <br />
+**OR values**: add `--OR` argument (column number) and remove `--beta` and `--se` arguments <br />
+**p-values**: add `--pval` argument (column number) and remove `--beta` and `--se` arguments. Note: this option will convert P values into unsigned Z scores, which allows heritability partitioning analyses but not genetic correlation analyses. If OR is available, you can precise both `--p-val` and `--OR` arguments to estimate signed effects. <br />
+**total sample size of GWAS**: add `--myN` argument (total samplesize number) and remove `--N` argument <br />
+**total sample size of cases and controls**: add `--N1` (number of cases) and `--N2` (number of controls) and remove `--N` / `--myN` arguments <br />
 
 ## 2. Run S-LDSC with 927 cCRE annotations
 
