@@ -152,8 +152,21 @@ The script will generate, for each SNP, a file `$SNP.out` containing overlapping
 
 
 ## 2. Run CT-FM-SNP on S-LDSC results 
+For each SNP, the script `5_CTFMSNP_default_susie.R` runs fine-mapping using S-LDSC results for the trait of interest.
+
+```bash
+conda activate ctfm
+Rscript scripts/5_CTFMSNP_default_susie.R $WORKING_DIRECTORY $TRAIT $SNP.out
+conda deactivate
+```
+
+The script requires 3 arguments:
+`$WORKING_DIRECTORY` - the directory CT-FM was downloaded into
+`$TRAIT` - the trait of interest, must have the same name as the directory with S-LDSC results in `out/SLDSC/`
+`$SNP.out` - the SNP to analyze, genereated in step 1. precise the full path to the file
 
 
+The results will be stored in `out/ctfmsnp/$TRAIT/$SNP_pips.txt` and `out/ctfmsnp/$TRAIT/$SNP_CS.txt` - PIP values for each overlapping annotation and the inferred credible sets
 
 # Running CT-FM with custom annotations
 
