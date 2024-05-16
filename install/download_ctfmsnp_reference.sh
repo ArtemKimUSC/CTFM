@@ -12,6 +12,6 @@ wget https://zenodo.org/records/11200933/files/SLDSC_beds.zip?download=1  -O SLD
 unzip SLDSC_beds.zip
 
 rm -r __MACOSX # need to update archives and remove MACOSX junk files
-
+rm SLDSC_beds.zip
 
 echo "Done"
