@@ -72,7 +72,7 @@ The code below assumes that it is launched from the root directory and that the 
 conda activate ctfm
 
 perl scripts/1_create_sumstats.pl --filein sumstats_in/YOUR_SUMSTATS \   # precise the name of your GWAS sumstats omitting the .gz extension
- --fileout sumstats_ready/YOUR_NEW_SUMSTATS \ # output sumstats, put it in the sumstats_ready/ directory for downstream analyses
+ --fileout sumstats_ready/YOUR_NEW_SUMSTATS.sumstats.gz \ # output sumstats, put it in the sumstats_ready/ directory for downstream analyses
  --chr  \
  --pos  \
  --beta  \
