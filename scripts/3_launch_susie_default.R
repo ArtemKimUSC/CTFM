@@ -19,7 +19,7 @@ i=trait
 
     data=data.frame()
 
-    for (j in 0:5) {
+    for (j in 0:4) {
     tmp=read.table(paste0(wd,'/out/SLDSC/',i,'/',i,'.',j,'.cell_type_results.txt'), sep='\t', header=T)
     data=rbind(data,tmp)
     }
