@@ -13,6 +13,8 @@ dependencies:
 - r
 - r-susier==0.12.35
 - pip
+- wget
+- unzip
 - pip:
   - scipy==0.18
   - pandas==0.20
