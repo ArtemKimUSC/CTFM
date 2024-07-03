@@ -133,22 +133,28 @@ conda deactivate
 
 The following workflow uses the CT-FM-SNP pipeline with 927 cCRE annotations of diverse human cell types, as it was performed in our paper : **arxiv link** <br />
 
-Make sure you have downloaded the necessary bed files (step 5 of **Installation**)
+Make sure you have downloaded the necessary files (step 5 of **Installation**). 
 
-
-## 1. Get overlapping annotations 
-
-We will use the script `4_CTFMSNP_default_annots.sh` to retreive, for each SNP, the overlapping annotations. The script takes as input a list of SNPs to analyze in **hg19** bed format, as shown in the example below:<br />
+## Input
+For CT-FM-SNP, you will need to have a list of candidate SNPs for your trait of interest (for example, fine-mapped SNPs from you GWAS). <br />
+CT-FM-SNP takes as input a list of SNPs to analyze in **hg19** bed format, as shown in the example below:<br />
 
 `chr1	100818727	100818728	rs17420882`
 
-Importantly, the 4th column needs to correspond to the name of the SNP (will be used for output). You also need to precise the output directory:
+Importantly, the 4th column needs to correspond to the name of the SNP (will be used for output).
+
+## 1. Get overlapping annotations 
+
+We will use the script `4_CTFMSNP_default_annots.sh` to retreive, for each SNP, the overlapping annotations. You also need to precise the output directory:
 
 ```bash
 conda activate ctfm
 bash scripts/4_CTFMSNP_default_annots.sh $SNP_LIST.bed $OUTPUT_DIRECTORY
 conda deactivate
 ```
+`$SNP_LIST.bed` - the bed file containing your SNPs of interest (see Input section above)
+`$OUTPUT_DIRECTORY` - your output directory
+
 The script will generate, for each SNP, a file `$SNP.out` containing overlapping S-LDSC annotations.
 
 
