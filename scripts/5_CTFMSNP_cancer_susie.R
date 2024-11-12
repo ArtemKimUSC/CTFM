@@ -27,7 +27,7 @@ SNP=SNP[!(SNP$annot %in% c('DHS_core_whole','DHS_full_whole','ABC_whole','Epimap
 SNP$annot=gsub('ABC_','',SNP$annot)
 SNP$annot=gsub('-','.',SNP$annot)
 SNP$annot=gsub('.hg19','',SNP$annot)
-SNP=SNP[SNP$annot %in% annots$Name,]
+SNP=SNP[SNP$annot %in% rownames(cor.res),]
 
 if (all(SNP$annot %in% rownames(cor.res)) != TRUE) { stop('error matching annotations between SNP file and Cor res file')}
 # rownames(cor.res)=gsub('\\.','_',rownames(cor.res))
