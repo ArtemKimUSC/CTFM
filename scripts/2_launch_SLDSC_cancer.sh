@@ -10,3 +10,4 @@ bash scripts/sldsc_cancer.sh $TRAIT $DATA_PATH/SLDSC_cancer/sldsc_annots_cancer_
 bash scripts/sldsc_cancer.sh $TRAIT $DATA_PATH/SLDSC_cancer/sldsc_annots_cancer_04 4
 bash scripts/sldsc_cancer.sh $TRAIT $DATA_PATH/SLDSC_cancer/sldsc_annots_cancer_05 5
 bash scripts/sldsc_cancer.sh $TRAIT $DATA_PATH/SLDSC_cancer/sldsc_annots_cancer_06 6
+bash scripts/sldsc_cancer.sh $TRAIT $DATA_PATH/SLDSC_cancer/sldsc_annots_cancer_07 7

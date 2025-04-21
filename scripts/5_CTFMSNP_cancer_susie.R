@@ -27,6 +27,8 @@ SNP=SNP[!(SNP$annot %in% c('DHS_core_whole','DHS_full_whole','ABC_whole','Epimap
 SNP$annot=gsub('ABC_','',SNP$annot)
 SNP$annot=gsub('-','.',SNP$annot)
 SNP$annot=gsub('.hg19','',SNP$annot)
+SNP$annot=gsub('TCGA_','',SNP$annot)
+
 SNP=SNP[SNP$annot %in% rownames(cor.res),]
 
 if (all(SNP$annot %in% rownames(cor.res)) != TRUE) { stop('error matching annotations between SNP file and Cor res file')}
@@ -44,7 +46,7 @@ i=trait
 
     data=data.frame()
 
-    for (j in 0:6) {
+    for (j in 0:7) {
     tmp=read.table(paste0(wd,'/out/SLDSC_cancer/',i,'/',i,'.',j,'.cell_type_results.txt'), sep='\t', header=T)
     data=rbind(data,tmp)
     }
@@ -55,6 +57,7 @@ i=trait
 data$Name=gsub('ABC_old_','',data$Name)
 data$Name=gsub('Zhang_Zhang_','Zhang_',data$Name)
 data$Name=gsub('ENCODE_','',data$Name)
+data$Name=gsub('TCGA_','',data$Name)
 data$Name=gsub('-','.',data$Name)
 
 #if (all(SNP$annot %in% data$Name)==TRUE & all(SNP$annot %in% annots$Name)==TRUE & all(SNP$annot %in% rownames(cor.res))==TRUE) {print('match OK')} else {print('ERROR match'); stop()}
@@ -94,7 +97,7 @@ all_pips=rbind(all_pips,pip)
 
 all_cs=data.frame()
 
-a=susie_get_cs(rss,Xcorr=cor.res_temp,coverage=0.96,min_abs_corr = 0.3000922) # maybe use Xcorr to filter out based on correlation threshold
+a=susie_get_cs(rss,Xcorr=cor.res_temp,coverage=0.96,min_abs_corr = 0.192) # maybe use Xcorr to filter out based on correlation threshold
                     #Xcorr : p by p matrix of correlations between variables (covariates). When provided, it will be used to remove CSs whose minimum correlation among variables is smaller than min_abs_corr.
 
 if (length(a$cs)==0) {print(paste0(rs,' no CS_95 with purity threshold!'));
