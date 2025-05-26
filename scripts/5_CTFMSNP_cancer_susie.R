@@ -63,7 +63,7 @@ data$Name=gsub('-','.',data$Name)
 #if (all(SNP$annot %in% data$Name)==TRUE & all(SNP$annot %in% annots$Name)==TRUE & all(SNP$annot %in% rownames(cor.res))==TRUE) {print('match OK')} else {print('ERROR match'); stop()}
 
 
-data=data[data$Name %in% annots$Name,]
+#data=data[data$Name %in% annots$Name,]
 
 #extract annots from S-LDSC and cor.res
 data=data[data$Name %in% SNP$annot,]
