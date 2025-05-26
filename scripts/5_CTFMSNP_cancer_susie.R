@@ -77,7 +77,7 @@ cor.res_temp=as.matrix(cor.res_temp)
 data=data[match(rownames(cor.res_temp), data$Name), ]
 
 
-if (nrow(data>1)) {
+if (nrow(data)>1) {
 
 rss=susie_rss(R=cor.res_temp, z=data$Zscore, estimate_residual_variance = F, L=10, n=1190321)
 
