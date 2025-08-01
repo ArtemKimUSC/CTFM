@@ -110,7 +110,7 @@ The script to launch is `scripts/2_launch_SLDSC.sh`<br /> => **If you work on a 
 
 ```bash
 conda activate ctfm
-bash scripts/2_launch_SLDSC.sh $YOUR_NEW_SUMSTATS_NAME  # precise the name of your sumstats file omitting the "sumstats.gz" part
+bash scripts/2_launch_SLDSC_default.sh $YOUR_NEW_SUMSTATS_NAME  # precise the name of your sumstats file omitting the "sumstats.gz" part
 conda deactivate
 ```
 
@@ -119,11 +119,11 @@ The output will be stored in `CTFM/out/SLDSC/YOUR_NEW_SUMSTATS/`<br />
 
 
 ## 3. Launch fine-mapping for your S-LDSC results 
-We will use the R script `3_launch_susie.R` to perform SuSiE fine-mapping for the analyzed GWAS (`$YOUR_NEW_SUMSTATS` argument) and 927 S-LDSC annotations.<br />
+We will use the R script `3_launch_susie_default.R` to perform SuSiE fine-mapping for the analyzed GWAS (`$YOUR_NEW_SUMSTATS` argument) and 927 S-LDSC annotations.<br />
 
 ```bash
 conda activate ctfm
-Rscript scripts/3_launch_susie.R $directory $YOUR_NEW_SUMSTATS #precise the work directory in which CT-FM was downloaded and the name of your sumstats file
+Rscript scripts/3_launch_susie_default.R $directory $YOUR_NEW_SUMSTATS #precise the work directory in which CT-FM was downloaded and the name of your sumstats file
 conda deactivate
 ```
 
