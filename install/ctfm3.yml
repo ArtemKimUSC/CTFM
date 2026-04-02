@@ -1,0 +1,11 @@
+name: ctfm3
+
+channels:
+- conda-forge
+- bioconda
+
+dependencies:
+- python=3.9
+- pip
+- r-base
+- r-susier==0.12.35
