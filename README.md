@@ -35,6 +35,7 @@ cd CTFM
 cd install/
 conda env create --file ctfm3.yml
 conda activate ctfm3
+conda install bioconda::bedtools
 git clone https://github.com/svdorn/ldsc-2.0.1.git
 cd ldsc-2.0.1
 pip install .
