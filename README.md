@@ -1,3 +1,8 @@
+# Update 2026
+
+Since Python2 is discontinued, we are currently migrating CT-FM to a newer version of ldsc which works with Python3. For now, we integrated the ldsc version proposed by Stephen Dorn:
+https://github.com/svdorn/ldsc-2.0.1
+
 # CT-FM and CT-FM-SNP - Cell Type Fine-Mapping
 **CT-FM** and **CT-FM-SNP** are statistical genetics methods to identify causal cell types underlying diseases/complex traits and particular candidate SNPs, respectively. We leverage cell type specific candidate cis-regulatory elements (cCREs) together with GWAS summary statistics while accounting for co-regulation of cis-regulatory effects across diverse cell types.
 
@@ -21,18 +26,23 @@ git clone https://github.com/ArtemKimUSC/CTFM/
 ```
 
 
-## 2. Install conda environment
+## 2. Install conda environment and LDSC
 
 ```bash
 cd CTFM
-mamba env create -f install/ctfm.yml
+cd install/
+conda env create --file ctfm3.yml
+conda activate ctfm3
+git clone https://github.com/svdorn/ldsc-2.0.1.git
+cd ldsc-2.0.1
+pip install .
 ```
 
 ## 3. Test conda environment
 Once created, try to activate the conda environment, test the LDSC build and the susieR library to make sure there are no errors.
 
 ```bash
-conda activate ctfm
+conda activate ctfm3
 python ~/bin/ldsc/ldsc.py -h
 R
 library(susieR)
@@ -69,7 +79,7 @@ The following workflow uses the CT-FM pipeline with 927 cCRE annotations of dive
 The goal here is to take your GWAS sumstats and convert it to a hg19 S-LDSC friendly format using the script `1_create_sumstats.pl`
 The code below assumes that it is launched from the root directory and that the unprocessed GWAS sumstats is gzipped and already located in the sumstats_in/ folder.
 ```bash
-conda activate ctfm
+conda activate ctfm3
 
 perl scripts/1_create_sumstats.pl --filein sumstats_in/YOUR_SUMSTATS \   # precise the name of your GWAS sumstats omitting the .gz extension
  --fileout sumstats_ready/YOUR_NEW_SUMSTATS.sumstats.gz \ # output sumstats, put it in the sumstats_ready/ directory for downstream analyses
@@ -109,7 +119,7 @@ The main code for S-LDSC analysis is stored in `scripts/sldsc.sh`<br />
 The script to launch is `scripts/2_launch_SLDSC.sh`<br /> => **If you work on a cluster with SLURM-like job submissions, I recommend you modify this script to launch 5 analyses as 5 separate jobs.** <br />
 
 ```bash
-conda activate ctfm
+conda activate ctfm3
 bash scripts/2_launch_SLDSC_default.sh $YOUR_NEW_SUMSTATS_NAME  # precise the name of your sumstats file omitting the "sumstats.gz" part
 conda deactivate
 ```
@@ -122,7 +132,7 @@ The output will be stored in `CTFM/out/SLDSC/YOUR_NEW_SUMSTATS/`<br />
 We will use the R script `3_launch_susie_default.R` to perform SuSiE fine-mapping for the analyzed GWAS (`$YOUR_NEW_SUMSTATS` argument) and 927 S-LDSC annotations.<br />
 
 ```bash
-conda activate ctfm
+conda activate ctfm3
 Rscript scripts/3_launch_susie_default.R $directory $YOUR_NEW_SUMSTATS #precise the work directory in which CT-FM was downloaded and the name of your sumstats file
 conda deactivate
 ```
@@ -148,7 +158,7 @@ Importantly, the 4th column needs to correspond to the name of the SNP (will be 
 We will use the script `4_CTFMSNP_default_annots.sh` to retreive, for each SNP, the overlapping annotations. You also need to precise the output directory:
 
 ```bash
-conda activate ctfm
+conda activate ctfm3
 bash scripts/4_CTFMSNP_default_annots.sh $SNP_LIST.bed $OUTPUT_DIRECTORY
 conda deactivate
 ```
@@ -162,7 +172,7 @@ The script will generate, for each SNP, a file `$SNP.out` containing overlapping
 For each SNP, the script `5_CTFMSNP_default_susie.R` runs fine-mapping using S-LDSC results of overlapping annotations for the trait of interest.
 
 ```bash
-conda activate ctfm
+conda activate ctfm3
 Rscript scripts/5_CTFMSNP_default_susie.R $WORKING_DIRECTORY $TRAIT $SNP.out
 conda deactivate
 ```
