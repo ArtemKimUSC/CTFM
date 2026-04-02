@@ -1,3 +1,7 @@
+#eval "$(conda shell.bash hook)"
+#module purge
+#module load gcc/13.3.0 python/3.11.9
+
 
 TRAIT=$1
 LDCTS=$2
@@ -8,7 +12,8 @@ DATA_PATH=$SCRIPT_PATH/../data
 
 echo $DATA_PATH
 
-SLDSC="python ~/bin/ldsc/ldsc.py";
+#SLDSC="python /home1/artemkim/CTFM_3_test/install/ldsc-2.0.1/ldsc.py";
+SLDSC="ldsc.py";
 REF_DIR="$DATA_PATH/1000G_EUR_Phase3"
 BASELINE="$REF_DIR/baseline_v1.2/baseline.";
 WEIGHTS="--w-ld-chr $REF_DIR/weights/weights.hm3_noMHC.";
@@ -26,7 +31,7 @@ mkdir -p $OUTDIR
 sed "s@data@${DATA_PATH}@g" $LDCTS > $OUTFILE.cts
 
 
-python ~/bin/ldsc/ldsc.py \
+$SLDSC \
   --h2-cts $SUMSTAT \
   --ref-ld-chr $BASELINE \
   --ref-ld-chr-cts $OUTFILE.cts \
