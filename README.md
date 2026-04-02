@@ -1,7 +1,9 @@
-# Update 2026
+# Updates 2026
 
 Since Python2 is discontinued, we are currently migrating CT-FM to a newer version of ldsc which works with Python3. For now, we integrated the ldsc version proposed by Stephen Dorn:
-https://github.com/svdorn/ldsc-2.0.1
+https://github.com/svdorn/ldsc-2.0.1<br />
+
+We are now providing a summary of codes to generate the results from our preprint - https://www.medrxiv.org/content/10.1101/2024.05.17.24307556v2 - see [here](CTFM_v1.ipynb) <br />
 
 # CT-FM and CT-FM-SNP - Cell Type Fine-Mapping
 **CT-FM** and **CT-FM-SNP** are statistical genetics methods to identify causal cell types underlying diseases/complex traits and particular candidate SNPs, respectively. We leverage cell type specific candidate cis-regulatory elements (cCREs) together with GWAS summary statistics while accounting for co-regulation of cis-regulatory effects across diverse cell types.
