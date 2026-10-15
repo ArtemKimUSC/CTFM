@@ -33,7 +33,7 @@ git clone https://github.com/ArtemKimUSC/CTFM/
 ```bash
 cd CTFM
 cd install/
-conda env create --file ctfm.yml
+conda env create --file ctfm_main.yml
 conda activate ctfm
 conda install bioconda::bedtools
 git clone https://github.com/svdorn/ldsc-2.0.1.git
