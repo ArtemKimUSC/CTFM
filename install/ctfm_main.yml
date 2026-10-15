@@ -1,0 +1,13 @@
+name: ctfm
+
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+  - python=3.9
+  - bitarray=2.6.0
+  - pandas=2.2.3
+  - pip
+  - r-base
+  - r-susier==0.12.35
