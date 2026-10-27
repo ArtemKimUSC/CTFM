@@ -5,6 +5,7 @@ channels:
   - bioconda
 
 dependencies:
+  - perl
   - perl-math-cdf
   - python=3.9
   - bitarray=2.6.0
