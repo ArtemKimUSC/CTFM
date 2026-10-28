@@ -125,7 +125,7 @@ run_ldsc_for_prefix() {
     echo "[create_ldscores_from_bed] $prefix chromosome $CHR"
 
     python "$CREATE_ANNOT_PY" \
-      --bim "$REF_BFILE_PREFIX.$CHR.bim" \
+      --bim "${REF_BFILE_PREFIX}${CHR}.bim" \
       --out "$annot" \
       "${annot_args[@]}"
 
@@ -133,7 +133,7 @@ run_ldsc_for_prefix() {
 
     python "$LDSC_PY" \
       --l2 \
-      --bfile "$REF_BFILE_PREFIX.$CHR" \
+      --bfile "${REF_BFILE_PREFIX}${CHR}" \
       --ld-wind-cm "$LD_WIND_CM" \
       --annot "$annot.gz" \
       --thin-annot \
