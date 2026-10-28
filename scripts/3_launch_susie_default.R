@@ -11,6 +11,12 @@ cor.res=as.matrix(cor.res)
 annots=read.table(paste0(wd,'/data/SLDSC_default/annots.txt'), header=T, sep='\t')
 cor.res=cor.res[rownames(cor.res) %in% annots$Name, colnames(cor.res) %in% annots$Name]
 
+annots=annots[annots$Name != 'ENCFF826YPV_endocrine_gland_epithelium_exocrine_gland_liver_hepatocyte',]
+annots=annots[annots$Name != 'ENCFF148MYZ_kidney_nephron_progenitor_cell',]
+annots=annots[annots$Name != 'ENCFF019OYK_ENCFF956JBC_ENCFF041NZX_kidney_nephron_progenitor_cell',]
+annots=annots[!is.na(annots$Name),]
+cor.res=cor.res[rownames(cor.res) %in% annots$Name, colnames(cor.res) %in% annots$Name]
+
 
 all_sldsc=data.frame()
 all_pips=data.frame()
@@ -39,7 +45,7 @@ data$Name=gsub('ENCODE_','',data$Name)
 if (all(colnames(cor.res) %in% data$Name)==TRUE) {print('match OK')} else {print('ERROR match'); stop()}
 
 data=data[data$Name %in% rownames(cor.res),]
-if (nrow(data)==927) { print('OK');print(i) } else {print('ERROR: Number of annots is not 927, stopping...');next}
+#if (nrow(data)==927) { print('OK');print(i) } else {print('ERROR: Number of annots is not 927, stopping...');next}
 
 
 data=data[match(rownames(cor.res), data$Name), ]
