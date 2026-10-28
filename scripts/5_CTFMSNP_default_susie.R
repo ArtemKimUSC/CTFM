@@ -11,7 +11,13 @@ rs=args[3]
 cor.res=read.table(paste0(wd,'/data/SLDSC_default/R.txt'), sep='\t', header=T) # read the correlation matrix
 cor.res=as.matrix(cor.res)
 annots=read.table(paste0(wd,'/data/SLDSC_default/annots.txt'), header=T, sep='\t')
+
+annots=annots[annots$Name != 'ENCFF826YPV_endocrine_gland_epithelium_exocrine_gland_liver_hepatocyte',]
+annots=annots[annots$Name != 'ENCFF148MYZ_kidney_nephron_progenitor_cell',]
+annots=annots[annots$Name != 'ENCFF019OYK_ENCFF956JBC_ENCFF041NZX_kidney_nephron_progenitor_cell',]
+annots=annots[!is.na(annots$Name),]
 cor.res=cor.res[rownames(cor.res) %in% annots$Name, colnames(cor.res) %in% annots$Name]
+
 
 
 # Open rs.out file and rename annots
@@ -44,7 +50,7 @@ i=trait
 
     data=data.frame()
 
-    for (j in 0:5) {
+    for (j in 0:4) {
     tmp=read.table(paste0(wd,'/out/SLDSC/',i,'/',i,'.',j,'.cell_type_results.txt'), sep='\t', header=T)
     data=rbind(data,tmp)
     }
