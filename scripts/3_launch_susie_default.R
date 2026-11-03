@@ -3,18 +3,34 @@ args = commandArgs(trailingOnly=TRUE)
 
 wd=args[1]
 trait=args[2]
+anc=if (length(args)>=3) args[3] else 'EUR'
+if (!(anc %in% c('EUR','EAS'))) { stop('Ancestry must be EUR or EAS') }
+
+annot.dir=paste0(wd,'/data/SLDSC_default')
+sldsc.dir=paste0(wd,'/out/SLDSC')
+outdir=paste0(wd,'/out/ctfm')
+n.snp=1190321
+if (anc=='EAS') {
+    annot.dir=paste0(wd,'/data/SLDSC_EAS')
+    sldsc.dir=paste0(wd,'/out/SLDSC_EAS')
+    outdir=paste0(wd,'/out/ctfm_EAS')
+    n.file=paste0(annot.dir,'/n_snps.txt')
+    if (!file.exists(n.file)) { stop('Missing EAS n_snps.txt; provide the validated regression-panel SNP count') }
+    n.snp=scan(n.file, what=double(), quiet=TRUE)
+    if (length(n.snp)!=1 || !is.finite(n.snp) || n.snp<2 || n.snp!=floor(n.snp)) {
+        stop('n_snps.txt must contain one integer greater than 1')
+    }
+}
+dir.create(outdir, recursive=TRUE, showWarnings=FALSE)
 
 
-### read correlation matrix EUR ###
-cor.res=read.table(paste0(wd,'/data/SLDSC_default/R.txt'), sep='\t', header=T) # read the correlation matrix
+### read ancestry-matched correlation matrix ###
+cor.res=read.table(paste0(annot.dir,'/R.txt'), sep='\t', header=T) # read the correlation matrix
 cor.res=as.matrix(cor.res)
-annots=read.table(paste0(wd,'/data/SLDSC_default/annots.txt'), header=T, sep='\t')
-cor.res=cor.res[rownames(cor.res) %in% annots$Name, colnames(cor.res) %in% annots$Name]
-
-annots=annots[annots$Name != 'ENCFF826YPV_endocrine_gland_epithelium_exocrine_gland_liver_hepatocyte',]
-annots=annots[annots$Name != 'ENCFF148MYZ_kidney_nephron_progenitor_cell',]
-annots=annots[annots$Name != 'ENCFF019OYK_ENCFF956JBC_ENCFF041NZX_kidney_nephron_progenitor_cell',]
-annots=annots[!is.na(annots$Name),]
+annots=read.table(paste0(annot.dir,'/annots.txt'), header=T, sep='\t')
+if (!all(annots$Name %in% rownames(cor.res)) || !all(annots$Name %in% colnames(cor.res))) {
+    stop('Annotations are missing from the selected R matrix')
+}
 cor.res=cor.res[rownames(cor.res) %in% annots$Name, colnames(cor.res) %in% annots$Name]
 
 
@@ -26,7 +42,7 @@ i=trait
     data=data.frame()
 
     for (j in 0:4) {
-    tmp=read.table(paste0(wd,'/out/SLDSC/',i,'/',i,'.',j,'.cell_type_results.txt'), sep='\t', header=T)
+    tmp=read.table(paste0(sldsc.dir,'/',i,'/',i,'.',j,'.cell_type_results.txt'), sep='\t', header=T)
     data=rbind(data,tmp)
     }
     rm(tmp)
@@ -45,7 +61,7 @@ data$Name=gsub('ENCODE_','',data$Name)
 if (all(colnames(cor.res) %in% data$Name)==TRUE) {print('match OK')} else {print('ERROR match'); stop()}
 
 data=data[data$Name %in% rownames(cor.res),]
-#if (nrow(data)==927) { print('OK');print(i) } else {print('ERROR: Number of annots is not 927, stopping...');next}
+if (nrow(data)==nrow(cor.res)) { print('OK');print(i) } else {stop('Number of annotations does not match the selected R matrix')}
 
 
 data=data[match(rownames(cor.res), data$Name), ]
@@ -66,7 +82,7 @@ cor.res_temp=cor.res[rownames(cor.res) %in% data$Name, colnames(cor.res) %in% da
 data=data[match(rownames(cor.res_temp), data$Name), ]
 
 #Run SuSiE
-rss=susie_rss(R=cor.res_temp, z=data$Zscore, estimate_residual_variance = F, L=10, n=1190321)
+rss=susie_rss(R=cor.res_temp, z=data$Zscore, estimate_residual_variance = F, L=10, n=n.snp)
 
 #out2 => pips
 pip=as.data.frame(rss$pip)
@@ -163,12 +179,13 @@ print(paste0("TRAIT:",trait))
 print(paste0("number of total CS:",nrow(table(all_cs$CS_Num))))
 
 
-write.table(all_pips, file=paste0(wd,'/out/ctfm/',trait,'_CTFM_pips.txt'),sep='\t', quote=F,row.names=F)
-write.table(all_sldsc, file=paste0(wd,'/out/ctfm/',trait,'_CTFM_sldsc.txt'),sep='\t', quote=F,row.names=F)
-write.table(all_cs, file=paste0(wd,'/out/ctfm/',trait,'_CTFM_CS.txt'),sep='\t', quote=F,row.names=F)
+write.table(all_pips, file=paste0(outdir,'/',trait,'_CTFM_pips.txt'),sep='\t', quote=F,row.names=F)
+write.table(all_sldsc, file=paste0(outdir,'/',trait,'_CTFM_sldsc.txt'),sep='\t', quote=F,row.names=F)
+write.table(all_cs, file=paste0(outdir,'/',trait,'_CTFM_CS.txt'),sep='\t', quote=F,row.names=F)
 
 
 print(paste0('DONE ',trait))
+
 
 
 
