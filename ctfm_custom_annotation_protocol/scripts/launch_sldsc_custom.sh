@@ -17,9 +17,10 @@ or all of:
   --whole-prefix PREFIX         Whole/background LD-score prefix
 
 Optional:
+  --ancestry EUR|EAS            Reference ancestry (default: EUR)
   --out-root DIR                S-LDSC output root (default: out/SLDSC_custom)
   --sumstats-dir DIR            Summary-statistic directory (default: sumstats_ready)
-  --ref-dir DIR                 1000G reference directory (default: data/1000G_EUR_Phase3)
+  --ref-dir DIR                 Override data/1000G_<ancestry>_Phase3
   --ldsc-py PATH_OR_CMD         LDSC command or ldsc.py path (default: ldsc.py)
   --block-size INT              Number of annotations per S-LDSC block (default: 200)
   --mode local|slurm|print      Execute locally, submit with sbatch, or print commands (default: local)
@@ -49,7 +50,8 @@ TARGET_PREFIX_TEMPLATE=""
 WHOLE_PREFIX=""
 OUT_ROOT="out/SLDSC_custom"
 SUMSTATS_DIR="sumstats_ready"
-REF_DIR="data/1000G_EUR_Phase3"
+ANC="EUR"
+REF_DIR=""
 LDSC_PY="ldsc.py"
 BLOCK_SIZE="200"
 MODE="local"
@@ -65,6 +67,7 @@ while [[ $# -gt 0 ]]; do
     --whole-prefix) WHOLE_PREFIX="$2"; shift 2 ;;
     --out-root) OUT_ROOT="$2"; shift 2 ;;
     --sumstats-dir) SUMSTATS_DIR="$2"; shift 2 ;;
+    --ancestry) ANC="$2"; shift 2 ;;
     --ref-dir) REF_DIR="$2"; shift 2 ;;
     --ldsc-py) LDSC_PY="$2"; shift 2 ;;
     --block-size) BLOCK_SIZE="$2"; shift 2 ;;
@@ -76,6 +79,14 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [[ "$ANC" != "EUR" && "$ANC" != "EAS" ]]; then
+  echo "ERROR: --ancestry must be EUR or EAS" >&2
+  exit 2
+fi
+if [[ -z "$REF_DIR" ]]; then
+  REF_DIR="data/1000G_${ANC}_Phase3"
+fi
+
 if [[ -z "$TRAIT" || -z "$CUSTOM_DIR" ]]; then
   usage >&2
   exit 2
@@ -83,6 +94,12 @@ fi
 
 if [[ -z "$LDCTS" && ( -z "$TARGET_PREFIX_TEMPLATE" || -z "$WHOLE_PREFIX" ) ]]; then
   echo "ERROR: provide --ldcts, or both --target-prefix-template and --whole-prefix" >&2
+  exit 2
+fi
+
+if [[ -n "$TARGET_PREFIX_TEMPLATE" && "$TARGET_PREFIX_TEMPLATE" != *"{ANNOT}"* ]]; then
+  echo "ERROR: --target-prefix-template must contain {ANNOT} so each .ldcts row points to a distinct target annotation prefix." >&2
+  echo "       If your LD scores are in one multi-column prefix, split them into per-annotation prefixes first." >&2
   exit 2
 fi
 
@@ -215,4 +232,3 @@ for block_file in "$BLOCK_DIR"/sldsc_custom_*; do
 done
 
 echo "Custom S-LDSC launch complete for $TRAIT with $block_id block(s)."
-
