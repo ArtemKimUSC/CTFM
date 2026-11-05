@@ -43,15 +43,15 @@ printf("     --hg $hg\n");
 ##1) Check SNPs in bim + weight
 print "\nRead HM3 SNPs\n";
 #weight
-open(IN,"$RealBin/../data/w_hm3.txt" ) || die ;
+open(IN,"$RealBin/../data/1000G_EAS_Phase3/1000G_hm3_noMHC.rsid" ) || die ;
 while (<IN>) {
     chomp $_; @line=split;
     $rsin{$line[0]}=1;
 }
 close IN;
 #bim
-if ($hg==19){$ref_file="/project/gazal_569/DATA/ldsc/reference_files/1000G_EAS_Phase3/plink_files/1000G.EAS.QC"}
-#if ($hg==38){$ref_file="$RealBin/../data/1000G_EAS_Phase3_hg38/plink_files/1000G.EAS.hg38"}  # NEED 100G EAS hg38!
+if ($hg==19){$ref_file="$RealBin/../data/1000G_EAS_Phase3/plink_files/1000G.EAS.QC"}
+#if ($hg==38){$ref_file="$RealBin/../1000G_EAS_Phase3_hg38/plink_files/1000G.EAS.QC"}  # NEED 100G EAS hg38!
 print "Read SNP info in bim files\n";
 for (my $chr = 1; $chr <= 22; $chr++) { 
     open(IN,"$ref_file.$chr.bim" ) || die ;
