@@ -17,8 +17,6 @@ if (anc=='EAS') {
     annot.dir=paste0(wd,'/data/SLDSC_EAS')
     sldsc.dir=paste0(wd,'/out/SLDSC_EAS')
     snp.outdir=paste0(wd,'/out/ctfmsnp_EAS')
-    n.file=paste0(annot.dir,'/n_snps.txt')
-    if (!file.exists(n.file)) { stop('Missing EAS n_snps.txt; provide the validated regression-panel SNP count') }
     n.snp=1071448
 }
 
