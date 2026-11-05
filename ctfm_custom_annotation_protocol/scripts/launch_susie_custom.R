@@ -8,8 +8,9 @@ parse_args <- function(args) {
     custom_dir = "data/SLDSC_custom",
     sldsc_out = "out/SLDSC_custom",
     out_dir = "out/ctfm_custom",
+    ancestry = "EUR",
     L = 10,
-    n = 1190321,
+    n = NULL,
     coverage = 0.96,
     min_abs_corr = 0.3,
     alpha_s_threshold = 3,
@@ -19,7 +20,7 @@ parse_args <- function(args) {
   while (i <= length(args)) {
     key <- args[[i]]
     if (key %in% c("--wd", "--trait", "--custom-dir", "--sldsc-out", "--out-dir",
-                   "--L", "--n", "--coverage", "--min-abs-corr",
+                   "--ancestry", "--L", "--n", "--coverage", "--min-abs-corr",
                    "--alpha-s-threshold", "--alpha-coverage")) {
       if (i == length(args)) stop("Missing value for ", key)
       value <- args[[i + 1]]
@@ -28,6 +29,7 @@ parse_args <- function(args) {
       if (key == "--custom-dir") out$custom_dir <- value
       if (key == "--sldsc-out") out$sldsc_out <- value
       if (key == "--out-dir") out$out_dir <- value
+      if (key == "--ancestry") out$ancestry <- value
       if (key == "--L") out$L <- as.integer(value)
       if (key == "--n") out$n <- as.numeric(value)
       if (key == "--coverage") out$coverage <- as.numeric(value)
@@ -39,7 +41,9 @@ parse_args <- function(args) {
       cat(
         "Usage: Rscript launch_susie_custom.R --trait TRAIT ",
         "[--wd /path/to/CTFM] [--custom-dir data/SLDSC_custom] ",
-        "[--sldsc-out out/SLDSC_custom] [--out-dir out/ctfm_custom]\n",
+        "[--sldsc-out out/SLDSC_custom] [--out-dir out/ctfm_custom] ",
+        "[--ancestry EUR|EAS] [--n COUNT]\n",
+        "Default ancestry: EUR. Default n: EUR=1190321, EAS=1071448; --n overrides this value.\n",
         sep = ""
       )
       quit(status = 0)
@@ -48,6 +52,11 @@ parse_args <- function(args) {
     }
   }
   if (is.null(out$trait)) stop("Missing required option: --trait")
+  if (!out$ancestry %in% c("EUR", "EAS")) stop("--ancestry must be EUR or EAS")
+  if (is.null(out$n)) out$n <- if (out$ancestry == "EAS") 1071448 else 1190321
+  if (!is.finite(out$n) || out$n < 2 || out$n != floor(out$n)) {
+    stop("--n must be an integer greater than 1")
+  }
   out
 }
 
@@ -93,6 +102,7 @@ read_sldsc_results <- function(trait_dir, trait) {
 }
 
 args <- parse_args(commandArgs(trailingOnly = TRUE))
+message("Ancestry: ", args$ancestry, "; SuSiE n: ", args$n)
 
 wd <- normalizePath(args$wd, mustWork = TRUE)
 custom_dir <- path_from_wd(args$custom_dir, wd)
@@ -271,5 +281,3 @@ message("Number of annotations in R: ", nrow(cor_res))
 message("Number of positive-Z annotations analyzed by SuSiE: ", nrow(positive))
 n_cs <- if ("CS_Num" %in% colnames(all_cs)) length(unique(all_cs$CS_Num)) else 0
 message("Number of total CS: ", n_cs)
-
-
