@@ -6,18 +6,30 @@ library(susieR)
 wd=args[1]
 trait=args[2]
 rs=args[3]
+anc=if (length(args)>=4) args[4] else 'EUR'
+if (!(anc %in% c('EUR','EAS'))) { stop('Ancestry must be EUR or EAS') }
+
+annot.dir=paste0(wd,'/data/SLDSC_default')
+sldsc.dir=paste0(wd,'/out/SLDSC')
+snp.outdir=paste0(wd,'/out/ctfmsnp')
+n.snp=1190321
+if (anc=='EAS') {
+    annot.dir=paste0(wd,'/data/SLDSC_EAS')
+    sldsc.dir=paste0(wd,'/out/SLDSC_EAS')
+    snp.outdir=paste0(wd,'/out/ctfmsnp_EAS')
+    n.file=paste0(annot.dir,'/n_snps.txt')
+    if (!file.exists(n.file)) { stop('Missing EAS n_snps.txt; provide the validated regression-panel SNP count') }
+    n.snp=1071448
+}
 
 
-cor.res=read.table(paste0(wd,'/data/SLDSC_default/R.txt'), sep='\t', header=T) # read the correlation matrix
+cor.res=read.table(paste0(annot.dir,'/R.txt'), sep='\t', header=T) # read the correlation matrix
 cor.res=as.matrix(cor.res)
-annots=read.table(paste0(wd,'/data/SLDSC_default/annots.txt'), header=T, sep='\t')
-
-annots=annots[annots$Name != 'ENCFF826YPV_endocrine_gland_epithelium_exocrine_gland_liver_hepatocyte',]
-annots=annots[annots$Name != 'ENCFF148MYZ_kidney_nephron_progenitor_cell',]
-annots=annots[annots$Name != 'ENCFF019OYK_ENCFF956JBC_ENCFF041NZX_kidney_nephron_progenitor_cell',]
-annots=annots[!is.na(annots$Name),]
+annots=read.table(paste0(annot.dir,'/annots.txt'), header=T, sep='\t')
+if (!all(annots$Name %in% rownames(cor.res)) || !all(annots$Name %in% colnames(cor.res))) {
+    stop('Annotations are missing from the selected R matrix')
+}
 cor.res=cor.res[rownames(cor.res) %in% annots$Name, colnames(cor.res) %in% annots$Name]
-
 
 
 # Open rs.out file and rename annots
@@ -51,7 +63,7 @@ i=trait
     data=data.frame()
 
     for (j in 0:4) {
-    tmp=read.table(paste0(wd,'/out/SLDSC/',i,'/',i,'.',j,'.cell_type_results.txt'), sep='\t', header=T)
+    tmp=read.table(paste0(sldsc.dir,'/',i,'/',i,'.',j,'.cell_type_results.txt'), sep='\t', header=T)
     data=rbind(data,tmp)
     }
     rm(tmp)
@@ -82,7 +94,7 @@ data=data[match(rownames(cor.res_temp), data$Name), ]
 
 if (nrow(data>1)) {
 
-rss=susie_rss(R=cor.res_temp, z=data$Zscore, estimate_residual_variance = F, L=10, n=1190321)
+rss=susie_rss(R=cor.res_temp, z=data$Zscore, estimate_residual_variance = F, L=10, n=n.snp)
 
 pip=as.data.frame(rss$pip)
 pip$Name=data$Name
@@ -175,7 +187,7 @@ all_cs=rbind(all_cs,cs_alpha)
 rs=basename(rs)
 rs=gsub(".out","",rs)
 
-outdir=paste0(wd,'/out/ctfmsnp/',trait)
+outdir=paste0(snp.outdir,'/',trait)
 
 print(paste0("TRAIT: ",trait," SNP: ",rs, " OUTDIR: ",outdir ))
 print(paste0("number CS:",nrow(table(all_cs$CS_Num))))
