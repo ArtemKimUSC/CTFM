@@ -21,7 +21,7 @@ if (anc=='EAS') {
 }
 
 
-cor.res=read.table(paste0(annot.dir,'/R.txt'), sep='\t', header=T) # read the correlation matrix
+cor.res=read.table(paste0(annot.dir,'/R.txt'), header=T) # read the correlation matrix
 cor.res=as.matrix(cor.res)
 annots=read.table(paste0(annot.dir,'/annots.txt'), header=T, sep='\t')
 if (!all(annots$Name %in% rownames(cor.res)) || !all(annots$Name %in% colnames(cor.res))) {
