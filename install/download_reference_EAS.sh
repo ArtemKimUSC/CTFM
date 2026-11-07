@@ -20,8 +20,7 @@ echo "Done"
 
 echo "Downloading EAS S-LDSC reference annotations for CT-FM"
 
-wget https://zenodo.org/records/23965230/files/SLDSC_EAS.tar.gz?download=1 -O SLDSC_EAS.tar.gz
-
+wget https://zenodo.org/records/24018537/files/SLDSC_EAS.tar.gz?download=1 -O SLDSC_EAS.tar.gz
 tar -zxvf SLDSC_EAS.tar.gz
 
 rm SLDSC_EAS.tar.gz
